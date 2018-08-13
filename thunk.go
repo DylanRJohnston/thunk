@@ -20,7 +20,7 @@ func NewThunk() *Thunk {
 }
 
 func (th *Thunk) Name() string {
-	return "test"
+	return "thunk"
 }
 
 func (th *Thunk) Imports(t typewriter.Type) []typewriter.ImportSpec {
