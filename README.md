@@ -34,12 +34,15 @@ func getUsers() []User {
 
 }
 
+var isOver18 = func(u User) bool { return u.age >= 18 }
+var age = func(u User) int { return u.age }
+
 func main() {
 	result := UsersThunk(getUsers).
-		Timeout(2 * time.Second).
+		Timeout(1 * time.Second).
 		Force().
-		Where(func(u User) bool { return u.age >= 18 }).
-		GroupByInt(func(u User) int { return u.age }).
+		Where(isOver18).
+		GroupByInt(age).
 
 	fmt.Println("Result is", result)
 }
