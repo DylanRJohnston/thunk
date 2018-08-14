@@ -38,7 +38,7 @@ func main() {
 	result := getUsers.
 		ThunkToStream().
 		Timeout(2 * time.Second).
-		Where(func(u User) { return u >= 18 }).
+		Where(func(u User) { return u.age >= 18 }).
 		GroupyBy(func(u User) { return u.age }).
 		Run()
 
