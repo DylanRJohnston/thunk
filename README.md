@@ -35,7 +35,7 @@ func getUsers() []User {
 }
 
 func main() {
-	result := Thunk(getUsers).
+	result := UsersThunk(getUsers).
 		Timeout(2 * time.Second).
 		Force().
 		Where(func(u User) { return u.age >= 18 }).
