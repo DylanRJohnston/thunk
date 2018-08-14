@@ -5,36 +5,34 @@ import "github.com/clipperhouse/typewriter"
 var templates = typewriter.TemplateSlice{thunk}
 var thunk = &typewriter.Template{
 	Name: "Thunk",
-	Text: ``,
-}
+	Text: `
 
-var text = `
-// {{.Name}}ThunkCtx ...
-type {{.Name}}ThunkCtx struct {
+// {{.UName}}ThunkCtx ...
+type {{.UName}}ThunkCtx struct {
 	run    *sync.WaitGroup
 	result <-chan {{.Name}}
 	cancel chan<- interface{}
 }
 
 // Cancel ...
-func (th {{.Name}}ThunkCtx) Cancel() {
+func (th {{.UName}}ThunkCtx) Cancel() {
 	close(th.cancel)
 	th.run.Done()
 }
 
 // Run ...
-func (th {{.Name}}ThunkCtx) Run() <-chan {{.Name}} {
+func (th {{.UName}}ThunkCtx) Run() <-chan {{.Name}} {
 	th.run.Done()
 	return th.result
 }
 
 // Force ...
-func (th {{.Name}}ThunkCtx) Force() {{.Name}} {
+func (th {{.UName}}ThunkCtx) Force() {{.Name}} {
 	return <-th.Run()
 }
 
 // New ...
-func New{{.Name}}Thunk(fn func() {{.Name}}) {{.Name}}ThunkCtx {
+func New{{.UName}}Thunk(fn func() {{.Name}}) {{.UName}}ThunkCtx {
 	result := make(chan {{.Name}})
 	cancel := make(chan interface{}, 1)
 	run := &sync.WaitGroup{}
@@ -57,14 +55,14 @@ func New{{.Name}}Thunk(fn func() {{.Name}}) {{.Name}}ThunkCtx {
 		}
 	}()
 
-	return {{.Name}}ThunkCtx{run, result, cancel}
+	return {{.UName}}ThunkCtx{run, result, cancel}
 }
 
 // ErrThunkTimeout ...
 var ErrThunkTimeout = errors.New("Thunk Timeout")
 
 // Timeout ...
-func (th {{.Name}}ThunkCtx) Timeout(wait time.Duration) {{.Name}}ThunkCtx {
+func (th {{.UName}}ThunkCtx) Timeout(wait time.Duration) {{.UName}}ThunkCtx {
 	result := make(chan {{.Name}})
 	go func() {
 		select {
@@ -74,6 +72,7 @@ func (th {{.Name}}ThunkCtx) Timeout(wait time.Duration) {{.Name}}ThunkCtx {
 		case result <- (<-th.result):
 		}
 	}()
-	return {{.Name}}ThunkCtx{th.run, result, th.cancel}
+	return {{.UName}}ThunkCtx{th.run, result, th.cancel}
 }
-`
+`,
+}
