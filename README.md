@@ -38,8 +38,8 @@ func main() {
 	result := UsersThunk(getUsers).
 		Timeout(2 * time.Second).
 		Force().
-		Where(func(u User) { return u.age >= 18 }).
-		GroupByInt(func(u User) { return u.age }).
+		Where(func(u User) bool { return u.age >= 18 }).
+		GroupByInt(func(u User) int { return u.age }).
 
 	fmt.Println("Result is", result)
 }
