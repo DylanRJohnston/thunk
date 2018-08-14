@@ -9,7 +9,6 @@ Despite golang's claim of being ReallySimple™ to the point of nausea there is 
 ## Example
 
 ```go
-//go:generate gen
 package main
 
 import (
@@ -17,18 +16,33 @@ import (
 	"time"
 )
 
-// +gen thunk:"UnderlyingType"
-type String string
+// +gen thunk slice:"Where,GroupBy[int]"
+type User struct {
+	id   int
+	name string
+	age  int
+}
 
-func foo() string {
+func getUsers() []User {
 	time.Sleep(2 * time.Second)
+	return UserSlice{
+		{1, "Alice", 18},
+		{2, "Bob", 18},
+		{3, "Carley", 21},
+		{4, "David", 16},
+	}
 
-	return "Foo!"
 }
 
 func main() {
-	result := NewStringThunk(foo).Timeout(1 * time.Second).Force()
+	result := getUsers.
+		AsStream().
+		Timeout(2 * time.Second).
+		Where(func(u User) { return u >= 18 }).
+		GroupyBy(func(u User) { return u.age }).
+		Run()
 
 	fmt.Println("Result is", result)
 }
+
 ```
