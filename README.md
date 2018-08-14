@@ -42,7 +42,7 @@ func main() {
 		Timeout(1 * time.Second).
 		Force().
 		Where(isOver18).
-		GroupByInt(age).
+		GroupByInt(age)
 
 	fmt.Println("Result is", result)
 }
