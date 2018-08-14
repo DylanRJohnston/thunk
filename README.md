@@ -1,10 +1,10 @@
 # thunk
 Just an experiment at this stage that may find its way into a real library.
 
-A (https://github.com/clipperhouse/typewriter)[typewriter] for use with the golang code generator (https://github.com/clipperhouse/gen)[gen].
+A [typewriter](https://github.com/clipperhouse/typewriter) for use with the golang code generator [gen](https://github.com/clipperhouse/gen).
 
 ## Reasoning
-Despite golang's claim to being a simple as possible to the point of nausea there is a lot of hidden complexity in the interaction between Channels and Goroutines. It's very easy to mess this up and leak resources or deadlock. They're too low level of a primitive to work with directly. Go's lack of support for generics makes this impossible to abstract away (runtime type reflection not withstanding), so we're left with code generation.
+Despite golang's claim to being ReallySimple™ to the point of nausea there is a lot of hidden complexity in the interaction between Channels and Goroutines. It's very easy to mess this up and leak resources or deadlock. They're too low level of a primitive to work with directly. Go's lack of support for generics makes this complexity impossible to abstract away (runtime type reflection not withstanding), so we're left with code generation.
 
 ## Example
 
